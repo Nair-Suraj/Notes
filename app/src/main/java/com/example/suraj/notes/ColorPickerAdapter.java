@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -19,11 +20,12 @@ import java.util.ArrayList;
  */
 
 public class ColorPickerAdapter extends BaseAdapter {
-   ArrayList<Integer> colorList;
+    ArrayList<Integer> colorList;
     Context context;
-    public ColorPickerAdapter(ArrayList<Integer> colorList,Context context) {
+
+    public ColorPickerAdapter(ArrayList<Integer> colorList, Context context) {
         this.colorList = colorList;
-        this.context=context;
+        this.context = context;
     }
 
     @Override
@@ -41,22 +43,31 @@ public class ColorPickerAdapter extends BaseAdapter {
         return 0;
     }
 
+    static class ViewHolder {
+
+        private TextView colorPicker;
+
+    }
+
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.color_item,viewGroup,false);
-        final Button colorPicker=(Button) v.findViewById(R.id.colorPickerButton);
-        colorPicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Drawable drawable=context.getResources().getDrawable(R.drawable.ic_color_picker,null);
-                PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(Color.parseColor("#FFF000"),
-                        PorterDuff.Mode.SRC_ATOP);
-                drawable.setColorFilter(porterDuffColorFilter);
+        ViewHolder mViewHolder;
+        if (view == null) {
+            mViewHolder = new ViewHolder();
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.color_item, viewGroup, false);
+            mViewHolder.colorPicker = (TextView) view.findViewById(R.id.colorPickerButton);
+            view.setTag(mViewHolder);
 
-            }
-        });
-        GradientDrawable drawable=(GradientDrawable) colorPicker.getBackground();
+        } else
+            mViewHolder = (ViewHolder) view.getTag();
+
+        GradientDrawable drawable = (GradientDrawable) mViewHolder.colorPicker.getBackground();
         drawable.setColor(colorList.get(i));
-        return v;
+        return view;
+    }
+
+    @Override
+    public boolean isEnabled(int i) {
+        return true;
     }
 }

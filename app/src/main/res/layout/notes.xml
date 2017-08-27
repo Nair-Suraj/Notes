@@ -18,14 +18,13 @@
 
             <EditText
                 android:id="@+id/editTextHeader"
-                fontpath="fonts/Inconsolata-Bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top|left"
+                android:gravity="top|start"
                 android:hint="Title"
-                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:textSize="20sp"
                 android:paddingTop="5dp"
-
                 android:textStyle="bold"
                 tools:ignore="MissingPrefix">
 
@@ -39,10 +38,10 @@
                 android:background="#00FFFFFF"
 
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="top|start"
                 android:hint="Notes"
                 android:inputType="textMultiLine"
-                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
                 android:paddingTop="5dp" />
         </LinearLayout>
 

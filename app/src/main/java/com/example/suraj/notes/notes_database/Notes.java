@@ -3,6 +3,7 @@ package com.example.suraj.notes.notes_database;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.data.Blob;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
@@ -11,7 +12,11 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 @Table(database = InitDataBase.class)
 public class Notes extends BaseModel {
-
+    public static final String TEXT = "TEXT";
+    public static final String TEXT_HEADER = "TEXT_HEADER";
+    public static final String ID = "ID";
+    public static final String COLOR_CODE = "COLOR_CODE";
+    public static final String LAST_EDIT="LAST_EDIT";
     @Column
     @PrimaryKey(autoincrement = true)
 
@@ -23,6 +28,11 @@ public class Notes extends BaseModel {
     @Column
     String noteTextHeader;
 
+    @Column
+    int colorCode;
+
+    @Column
+    String lastEdited;
     public void setNoteText(String noteText) {
         this.noteText = noteText;
     }
@@ -47,4 +57,19 @@ public class Notes extends BaseModel {
         this.noteTextHeader = noteTextHeader;
     }
 
+    public int getColorCode() {
+        return colorCode;
+    }
+
+    public void setColorCode(int colorCode) {
+        this.colorCode = colorCode;
+    }
+
+    public String getLastEdited() {
+        return lastEdited;
+    }
+
+    public void setLastEdited(String lastEdited) {
+        this.lastEdited = lastEdited;
+    }
 }

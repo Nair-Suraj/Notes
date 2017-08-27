@@ -7,9 +7,9 @@
         android:icon="@drawable/ic_save"
         android:title="Save" />
     <item
-        android:id="@+id/camera"
-        android:icon="@drawable/ic_gallery"
-        android:title="Gallery" />
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share"
+        android:title="Share" />
     <item
         android:id="@+id/color"
         android:icon="@drawable/ic_color_picker"
