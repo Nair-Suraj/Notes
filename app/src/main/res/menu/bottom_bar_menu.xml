@@ -4,10 +4,14 @@
 
     <item
         android:id="@+id/save"
-        android:icon="@drawable/ic_save_black_24dp"
+        android:icon="@drawable/ic_save"
         android:title="Save" />
     <item
         android:id="@+id/camera"
-        android:icon="@drawable/ic_camera_black_24dp"
-        android:title="Camera" />
+        android:icon="@drawable/ic_gallery"
+        android:title="Gallery" />
+    <item
+        android:id="@+id/color"
+        android:icon="@drawable/ic_color_picker"
+        android:title="Choose Color" />
 </menu>
