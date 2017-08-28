@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Note it</string>
     <string name="share">Share your notes</string>
+    <string name="date">Date</string>
+    <string name="complete_task_by">Complete task by :</string>
+    <string name="title">Task</string>
+    <string name="description">Description</string>
 </resources>

@@ -54,7 +54,7 @@ public class MainFragment extends Fragment {
 
         if(userNotes.size()==0){
             TapTargetView.showFor(getActivity(),
-                    TapTarget.forView(fab, "Note it down....\nCreate your first note")
+                    TapTarget.forView(fab, "Note it down....\nCreate your first task")
                             .targetCircleColor(R.color.colorPrimaryDark)
                             .dimColor(R.color.colorPrimaryDark)
                             .cancelable(false)

@@ -17,6 +17,7 @@ public class Notes extends BaseModel {
     public static final String ID = "ID";
     public static final String COLOR_CODE = "COLOR_CODE";
     public static final String LAST_EDIT="LAST_EDIT";
+    public static final String TODO_DATE="TODO_DATE";
     @Column
     @PrimaryKey(autoincrement = true)
 
@@ -33,6 +34,10 @@ public class Notes extends BaseModel {
 
     @Column
     String lastEdited;
+
+    @Column
+    String todoDate;
+
     public void setNoteText(String noteText) {
         this.noteText = noteText;
     }
@@ -71,5 +76,13 @@ public class Notes extends BaseModel {
 
     public void setLastEdited(String lastEdited) {
         this.lastEdited = lastEdited;
+    }
+
+    public String getTodoDate() {
+        return todoDate;
+    }
+
+    public void setTodoDate(String todoDate) {
+        this.todoDate = todoDate;
     }
 }

@@ -2,9 +2,11 @@ package com.example.suraj.notes;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -31,12 +33,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suraj.notes.notes_database.Notes;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -54,6 +61,8 @@ import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 /**
  * Created by achara on 8/6/2017.
  */
@@ -64,6 +73,10 @@ public class NotesFragment extends Fragment {
     private Bitmap bmp;
     private int id;
     private int colorCode = -1;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private String todoDate;
     private static final int REQUEST_WRITE_PERMISSION = 786;
     BottomNavigationView bottomNavigationView;
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,6 +90,7 @@ public class NotesFragment extends Fragment {
                         notes.setNoteText(editText.getText().toString());
                         notes.setNoteTextHeader(editTextHeader.getText().toString());
                         notes.setId(id);
+                        notes.setTodoDate(todoDate);
                         notes.setLastEdited(getCurrentTime());
                         if (colorCode == -1) {
                             notes.setColorCode(Color.parseColor("#FFC0CB"));
@@ -89,7 +103,7 @@ public class NotesFragment extends Fragment {
                     break;
                 case R.id.color:
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
                     View view = inflater.inflate(R.layout.color_grid, null, false);
                     builder.setView(view);
 
@@ -173,11 +187,14 @@ public class NotesFragment extends Fragment {
         }
 
         //BottomBarViewClicks
+        bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.design_bottom_sheet);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
         editText = (EditText) view.findViewById(R.id.userNotes);
         editTextHeader = (EditText) view.findViewById(R.id.editTextHeader);
         editTextHeader.setTypeface(TypefaceUtils.load(getActivity().getAssets(), "fonts/Inconsolata-Bold.ttf"));
         editText.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+        final TextView showDate=(TextView)view.findViewById(R.id.showDate);
         if (getArguments() != null) {
             editText.setText(getArguments().getString(Notes.TEXT));
             editTextHeader.setText(getArguments().getString(Notes.TEXT_HEADER));
@@ -186,25 +203,69 @@ public class NotesFragment extends Fragment {
             editTextHeader.setTextColor(colorCode);
             editTime = getArguments().getString(Notes.LAST_EDIT);
             //Set  Last edit time
-
+            todoDate=getArguments().getString(Notes.TODO_DATE);
+            if(todoDate!=null){
+                showDate.setText(todoDate);
+            }
             if (editTime != null) {
                 getActivity().setTitle("Last Edited: " + editTime);
             }
 
         }
-        bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.design_bottom_sheet);
-        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        ImageView todoDate=(ImageView)view.findViewById(R.id.todo_date);
+        todoDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater=(LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View datePickerView=inflater.inflate(R.layout.datepicker,null,false);
+                DatePicker dp=(DatePicker) datePickerView.findViewById(R.id.date_picker);
+                dp.init(mYear, mMonth, mDay, new DatePicker.OnDateChangedListener() {
+                    @Override
+                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        mYear = year;
+                        mMonth = monthOfYear;
+                        mDay = dayOfMonth;
+                        showDate.setText(updateDateDisplay());
+                    }
+                });
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showDate.setText(updateDateDisplay());
+                    }
+                });
+                builder.setView(datePickerView);
+                builder.setTitle("Complete Task by..");
+                Dialog dialog=builder.create();
+                dialog.show();
+
+            }
+        });
 
 
         return view;
     }
+    private String updateDateDisplay(){
 
+        todoDate= "To do Date :- "+new StringBuilder()
+                // Month is 0 based so add 1
+                .append(mMonth + 1).append("-")
+                .append(mDay).append("-")
+                .append(mYear).append(" ");
+        return todoDate;
+
+    }
     private String getCurrentTime() {
         try {
             Calendar calendar = Calendar.getInstance();
-            String currentDate = calendar.get(Calendar.DAY_OF_MONTH) +
-                    "-" + calendar.get(Calendar.MONTH) +
-                    "-" + calendar.get(Calendar.YEAR);
+            mDay=calendar.get(Calendar.DAY_OF_MONTH);
+            mMonth=calendar.get(Calendar.MONTH);
+            mYear= calendar.get(Calendar.YEAR);
+
+            String currentDate = mDay+
+                    "-" + mMonth +
+                    "-" + mYear;
 
             SimpleDateFormat df = new SimpleDateFormat("HH:mm a", Locale.US);
             String currentTime = df.format(calendar.getTime());
@@ -246,7 +307,7 @@ public class NotesFragment extends Fragment {
 
         if (editText != null && editText.getText().toString().length() > 0 ||
                 editTextHeader != null && editTextHeader.getText().toString().length() > 0) {
-            String shareBody = editTextHeader.getText().toString() + "\n" + editText.getText().toString();
+            String shareBody = editTextHeader.getText().toString() + "\n" + editText.getText().toString()+"\n"+"To do by :-"+todoDate;
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");

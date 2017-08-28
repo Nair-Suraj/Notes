@@ -25,6 +25,7 @@ import static com.example.suraj.notes.notes_database.Notes.ID;
 import static com.example.suraj.notes.notes_database.Notes.LAST_EDIT;
 import static com.example.suraj.notes.notes_database.Notes.TEXT;
 import static com.example.suraj.notes.notes_database.Notes.TEXT_HEADER;
+import static com.example.suraj.notes.notes_database.Notes.TODO_DATE;
 
 /**
  * Created by achara on 8/12/2017.
@@ -132,6 +133,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.NotesHolder> 
                     bundle.putInt(ID, userNotes.get(position).getId());
                     bundle.putInt(COLOR_CODE,userNotes.get(position).getColorCode());
                     bundle.putString(LAST_EDIT,userNotes.get(position).getLastEdited());
+                    bundle.putString(TODO_DATE,userNotes.get(position).getTodoDate());
                     notesFragment.setArguments(bundle);
                     activity.getFragmentManager().beginTransaction().replace(android.R.id.content, notesFragment).addToBackStack(null).commit();
                 }

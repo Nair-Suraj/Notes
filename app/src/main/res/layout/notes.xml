@@ -8,8 +8,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_height="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,12 +19,14 @@
             <EditText
                 android:id="@+id/editTextHeader"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:gravity="top|start"
-                android:hint="Title"
+                android:hint="@string/title"
                 android:paddingStart="5dp"
-                android:textSize="20sp"
+                android:paddingEnd="5dp"
                 android:paddingTop="5dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 tools:ignore="MissingPrefix">
 
@@ -34,15 +36,43 @@
             <EditText
                 android:id="@+id/userNotes"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
                 android:background="#00FFFFFF"
 
                 android:ems="10"
                 android:gravity="top|start"
-                android:hint="Notes"
+                android:hint="@string/description"
                 android:inputType="textMultiLine"
                 android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:paddingTop="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:id="@+id/showDate"
+                    android:textSize="18sp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/complete_task_by" />
+
+                <ImageView
+                    android:id="@+id/todo_date"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_date"
+                    android:text="@string/date" />
+            </LinearLayout>
         </LinearLayout>
 
     </FrameLayout>
