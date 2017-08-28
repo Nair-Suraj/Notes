@@ -32,7 +32,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-Link to Video Walkthrough (https://drive.google.com/open?id=0BwZ3adh4YEaTUFZjckVBamJaeGs)
+Link to Video Walkthrough https://www.dropbox.com/s/w4nmobzv6wdh5vp/Get%20Started%20with%20Dropbox.pdf?dl=0
 
 ## Project Analysis
 
