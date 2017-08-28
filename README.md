@@ -32,7 +32,9 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-Link to Video Walkthrough https://www.dropbox.com/s/w4nmobzv6wdh5vp/Get%20Started%20with%20Dropbox.pdf?dl=0
+<img src='https://github.com/Nair-Suraj/Notes/blob/master/Note_It_GIF.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Project Analysis
 
